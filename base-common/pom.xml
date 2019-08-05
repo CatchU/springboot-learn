@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.catchu</groupId>
-    <artifactId>java-core</artifactId>
+    <artifactId>base-common</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>java-core</name>
-    <description>java核心</description>
+    <name>base-common</name>
+    <description>基础通用模块</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -21,8 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -34,7 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 

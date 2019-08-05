@@ -11,5 +11,7 @@
 
     <modules>
         <module>java-core</module>
+        <module>design-pattern</module>
+        <module>base-common</module>
     </modules>
 </project>
