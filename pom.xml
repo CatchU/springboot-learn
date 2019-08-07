@@ -13,5 +13,6 @@
         <module>java-core</module>
         <module>design-pattern</module>
         <module>base-common</module>
+        <module>mq-center</module>
     </modules>
 </project>
