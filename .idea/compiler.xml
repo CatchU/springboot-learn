@@ -14,12 +14,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="base-common" target="1.5" />
+      <module name="base-common" target="1.8" />
       <module name="design-pattern" target="1.8" />
       <module name="java-core" target="1.8" />
       <module name="mq-center" target="1.8" />
       <module name="shell-learn" target="1.5" />
-      <module name="springboot-learn" target="1.5" />
+      <module name="springboot-learn" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

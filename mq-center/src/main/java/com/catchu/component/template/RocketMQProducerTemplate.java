@@ -37,11 +37,6 @@ public class RocketMQProducerTemplate {
         this.producer.setRetryTimesWhenSendFailed(3);
         this.producer.start();
         log.info("desc:{}", "rocketmq producer started");
-        Message message = new Message();
-        message.setBody("fdsaf".getBytes());
-        message.setTags("fdsja");
-        message.setTopic("fdsalf");
-        this.sendMessage(message);
     }
 
     @PreDestroy
