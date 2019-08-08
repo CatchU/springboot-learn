@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/base-common/base-common.iml" filepath="$PROJECT_DIR$/base-common/base-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/design-pattern/design-pattern.iml" filepath="$PROJECT_DIR$/design-pattern/design-pattern.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-core/java-core.iml" filepath="$PROJECT_DIR$/java-core/java-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mq-center/mq-center.iml" filepath="$PROJECT_DIR$/mq-center/mq-center.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shell-learn/shell-learn.iml" filepath="$PROJECT_DIR$/shell-learn/shell-learn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-learn.iml" filepath="$PROJECT_DIR$/springboot-learn.iml" />
+    </modules>
+  </component>
+</project>

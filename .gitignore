@@ -1,0 +1,25 @@
+.settings/
+logs/
+out/
+*/target/
+target/
+lib/
+*.class
+*.iml
+workspace.xml
+*.ipr
+*.iws
+*.project
+*.classpath
+
+# Package Files #
+*.jar
+*.war
+*.ear
+test/
+#
+
+logging-path_IS_UNDEFINED
+.idea
+.idea/
+logback-spring.xml

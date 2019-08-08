@@ -6,19 +6,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mq-center" />
         <module name="base-common" />
         <module name="shell-learn" />
         <module name="java-core" />
         <module name="design-pattern" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="base-common" target="1.5" />
+      <module name="design-pattern" target="1.8" />
+      <module name="java-core" target="1.8" />
+      <module name="mq-center" target="1.8" />
+      <module name="shell-learn" target="1.5" />
+      <module name="springboot-learn" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="base-common" options="" />
       <module name="design-pattern" options="-parameters" />
       <module name="java-core" options="-parameters" />
-      <module name="shell-learn" options="" />
+      <module name="mq-center" options="-parameters" />
     </option>
   </component>
 </project>

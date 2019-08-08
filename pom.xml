@@ -14,5 +14,6 @@
         <module>design-pattern</module>
         <module>base-common</module>
         <module>shell-learn</module>
+        <module>mq-center</module>
     </modules>
 </project>
