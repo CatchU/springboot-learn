@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="base-common" />
+        <module name="shell-learn" />
         <module name="java-core" />
         <module name="design-pattern" />
       </profile>
@@ -14,9 +15,10 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="base-common" options="-parameters" />
+      <module name="base-common" options="" />
       <module name="design-pattern" options="-parameters" />
       <module name="java-core" options="-parameters" />
+      <module name="shell-learn" options="" />
     </option>
   </component>
 </project>

@@ -3,22 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.catchu</groupId>
-    <artifactId>base-common</artifactId>
+    <artifactId>shell-learn</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>base-common</name>
-    <description>基础通用模块</description>
+    <name>shell-learn</name>
+    <description>shell脚本集锦</description>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
 </project>
