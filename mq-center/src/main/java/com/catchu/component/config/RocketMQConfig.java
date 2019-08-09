@@ -15,4 +15,6 @@ public class RocketMQConfig {
     private Integer timeOut;
     @Value("${rocketmq.producerGroup}")
     private String producerGroup;
+    @Value("${rocketmq.consumerTopics}")
+    private String consumerTopics;
 }

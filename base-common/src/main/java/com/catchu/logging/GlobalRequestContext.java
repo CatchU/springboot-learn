@@ -21,11 +21,12 @@ public class GlobalRequestContext {
 
     private static final ThreadLocal<String> DEVICE_ID = new ThreadLocal<>();
 
+    private static final ThreadLocal<Map<String, String>> CONTEXT_PARAMS = ThreadLocal.withInitial(Maps::newHashMap);
+
     /**
      * 微信小程序需要绑定的参数
      */
     private static final ThreadLocal<Map<String, Object>> WECHAT_PARAM = ThreadLocal.withInitial(Maps::newHashMap);
-
 
     public static String getURL() {
         return URL.get();
@@ -43,6 +44,10 @@ public class GlobalRequestContext {
     public static void setUserId(long userId) {
         USER_ID.remove();
         USER_ID.set(userId);
+    }
+
+    public static void putRequestHeaders(Map<String, String> headers) {
+        CONTEXT_PARAMS.get().putAll(headers);
     }
 
     public static String getRequestId() {
@@ -79,7 +84,7 @@ public class GlobalRequestContext {
         return API_BEGIN.get();
     }
 
-    static void setApiBegin(Long apiBegin) {
+    public static void setApiBegin(Long apiBegin) {
         API_BEGIN.remove();
         API_BEGIN.set(apiBegin);
     }

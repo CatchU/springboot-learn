@@ -82,10 +82,6 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
                 .setMessage(e.getMessage());
     }
 
-    public interface LogHook {
-        void log(HttpServletRequest request, Exception e);
-    }
-
     @Data
     @Accessors(chain = true)
     @NoArgsConstructor

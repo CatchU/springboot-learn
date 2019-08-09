@@ -1,8 +1,10 @@
 package com.catchu.component.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.catchu.common.response.Response;
 import com.catchu.component.beans.MQMessageBean;
 import com.catchu.component.service.RocketMqService;
+import com.catchu.exception.beans.BadRequestException;
 import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class MQCenterController {
      * @return
      */
     @PostMapping("/message/rocketmq/1.0.0")
-    public Object sendMessageForRocketMQ(@RequestBody MQMessageBean bean){
+    public Response sendMessageForRocketMQ(@RequestBody MQMessageBean bean){
         log.info("uuid:{},desc:{},params:{}",bean.getBusinessId(),"发送ROCKETMQ消息[CONTROLLER]", JSONObject.toJSONString(bean));
         if(Strings.isNullOrEmpty(bean.getTopic())){
             log.info("uuid:{},desc:{},result:{}",bean.getBusinessId(),"发送ROCKETMQ消息[CONTROLLER]", "invalid topic info");
@@ -44,12 +46,10 @@ public class MQCenterController {
             return null;
         }
         try {
-            return rocketMqService.sendMessage(bean);
+            return new Response<>().ok(rocketMqService.sendMessage(bean));
         }catch (Exception e){
             log.info("uuid:{},desc:{},error:{}",bean.getBusinessId(),"发送ROCKETMQ消息[CONTROLLER]-失败", e.getMessage(),e);
+            return new Response<>().error("发送失败");
         }
-
-        log.info("uuid:{},desc:{},result:{}",bean.getBusinessId(),"发送ROCKETMQ消息[CONTROLLER]", "true");
-        return null;
     }
 }

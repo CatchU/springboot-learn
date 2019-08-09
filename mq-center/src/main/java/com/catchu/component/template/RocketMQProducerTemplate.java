@@ -4,9 +4,13 @@ import com.catchu.component.config.RocketMQConfig;
 import com.google.common.base.Strings;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +32,7 @@ public class RocketMQProducerTemplate {
     public void initProducer() throws Exception{
         log.info("desc:{}", "rocketmq producer starting");
         if (this.producer == null) {
-            this.producer = new DefaultMQProducer();
+            this.producer = new DefaultMQProducer("MagicMQ-Producer");
         }
         this.producer.setProducerGroup(this.rocketMQConfig.getProducerGroup());
         this.producer.setSendMsgTimeout(this.rocketMQConfig.getTimeOut());
@@ -98,8 +102,8 @@ public class RocketMQProducerTemplate {
                 log.info("消息发送成功：{}", sendResult.toString());
                 return true;
             }
-        } catch (Exception e) {
-            log.info("消息发送失败：{}", e);
+        } catch (MQClientException |RemotingException |MQBrokerException |InterruptedException e) {
+            log.info("消息发送失败：{}", ExceptionUtils.getStackTrace(e));
         }
         return false;
     }

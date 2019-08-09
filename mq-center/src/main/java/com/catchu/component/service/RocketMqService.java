@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Objects;
 
 @Component
@@ -22,7 +21,7 @@ public class RocketMqService {
      *
      * @param bean
      */
-    public Boolean sendMessage(MQMessageBean bean) throws Exception {
+    public Boolean sendMessage(MQMessageBean bean){
         log.info("uuid:{},desc:{},params:{}",bean.getBusinessId(),"发送ROCKETMQ消息[SERVICE]", JSONObject.toJSONString(bean));
         Boolean b =  rocketMQProducerTemplate.sendMessage(generateMessage(bean));
         log.info("uuid:{},desc:{},result:{}",bean.getBusinessId(),"发送ROCKETMQ消息[SERVICE]",b);
@@ -33,7 +32,7 @@ public class RocketMqService {
      * @param mqMessageBean
      * @return
      */
-    private Message generateMessage(MQMessageBean mqMessageBean) throws Exception {
+    private Message generateMessage(MQMessageBean mqMessageBean){
         Message msg = new Message();
         msg.setTags(mqMessageBean.getBusinessTag());
         msg.setTopic(mqMessageBean.getTopic());
