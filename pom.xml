@@ -13,8 +13,10 @@
         <module>java-core</module>
         <module>design-pattern</module>
         <module>base-common</module>
+        <module>id-worker</module>
         <module>shell-learn</module>
         <module>mq-center</module>
+        <module>db-sharding</module>
     </modules>
 
     <build>

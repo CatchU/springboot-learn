@@ -39,11 +39,6 @@
             <artifactId>rocketmq-client</artifactId>
             <version>4.5.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.rocketmq</groupId>-->
-<!--            <artifactId>rocketmq-common</artifactId>-->
-<!--            <version>4.5.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

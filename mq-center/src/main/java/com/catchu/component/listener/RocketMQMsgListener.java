@@ -14,13 +14,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author liang
- * @description
- * @date 2019/3/25 15:32
+ * 消息消费监听器
+ * 实际使用中放在实际消费消息的业务侧，这里为方便看，直接放在了消息中心模块
  */
 @Slf4j
 @Component
-public class RankRktMQSingleMsgListener implements MessageListenerConcurrently {
+public class RocketMQMsgListener implements MessageListenerConcurrently {
 
 
     @Override

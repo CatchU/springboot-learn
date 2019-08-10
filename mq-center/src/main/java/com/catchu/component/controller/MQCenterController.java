@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 消息发送CONTROLLER
+ * 实际开发中，消息中心由一个专门团队负责，所有消息生产者均调用此接口发送消息，消息总线
  */
 @RestController
 @RequestMapping("/")

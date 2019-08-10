@@ -18,6 +18,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Objects;
 
+/**
+ * RocketMq生成这模板，负责实际发送消息
+ */
 @Component
 @Slf4j
 @Data

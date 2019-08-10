@@ -1,7 +1,7 @@
 package com.catchu.component.config;
 
 import com.alibaba.fastjson.JSONObject;
-import com.catchu.component.listener.RankRktMQSingleMsgListener;
+import com.catchu.component.listener.RocketMQMsgListener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
@@ -14,7 +14,8 @@ import javax.annotation.PreDestroy;
 import java.util.Arrays;
 
 /**
- * RocketMQ消费者初始化
+ * RocketMQ消费者初始化，实际中用在消息消费侧
+ * 与消息监听器搭配使用，{@link RocketMQMsgListener}
  * @author junzhongliu
  * @date 2019/8/9 12:50
  */
@@ -24,7 +25,7 @@ public class RocketMQConsumerInits {
     @Autowired
     private RocketMQConfig rocketMQConfig;
     @Autowired
-    private RankRktMQSingleMsgListener rankRktMQSingleMsgListener;
+    private RocketMQMsgListener rocketMQMsgListener;
     private DefaultMQPushConsumer consumer;
     @Autowired
     private Environment environment;
@@ -53,7 +54,7 @@ public class RocketMQConsumerInits {
         // 批量消费,每次拉取10条
         consumer.setConsumeMessageBatchMaxSize(10);
         consumer.subscribe(rocketMQConfig.getConsumerTopics(),  "*");
-        consumer.registerMessageListener(rankRktMQSingleMsgListener);
+        consumer.registerMessageListener(rocketMQMsgListener);
         consumer.start();
         log.info("desc:{}", "rocketmq consumer started");
     }
