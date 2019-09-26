@@ -2,6 +2,7 @@ package com.catchu.http.builders;
 
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -46,16 +47,18 @@ public class HttpParamsBuilder {
     }
 
     /**
-     * POST请求参数构造
+     * 构造POST请求的参数
+     * @param params
+     * @return
      */
-    public static List<NameValuePair> formParamsBuilder(Map<String, ?> params) {
+    public static List<NameValuePair> formParamsBuilder(Map<String,?> params){
         return buildRequestBody(params);
     }
 
-    private static List<NameValuePair> buildRequestBody(Map<String, ?> params) {
+    public static List<NameValuePair> buildRequestBody(Map<String,?> params){
         return params.entrySet().parallelStream()
                 .filter(entry -> Objects.nonNull(entry.getKey()) && Objects.nonNull(entry.getValue()))
-                .map(entry -> new BasicNameValuePair(entry.getKey(), entry.getValue().toString()))
+                .map(entry -> new BasicNameValuePair(entry.getKey(),entry.getValue().toString()))
                 .collect(Collectors.toList());
     }
 
@@ -74,7 +77,8 @@ public class HttpParamsBuilder {
      */
     @SuppressWarnings("unchecked")
     public static Map<String, String> mapParamsBuilder(Object obj) {
-        return JSONObject.parseObject(JSONObject.toJSONString(obj), Map.class);
+        Map<String,String> map = JSONObject.parseObject(JSONObject.toJSONString(obj), Map.class);
+        return filterBlank(map);
     }
 
     /**
@@ -97,5 +101,17 @@ public class HttpParamsBuilder {
      */
     public static <T> List<T> arrayParamsBuilder(String params, Class<T> clazz) {
         return JSONObject.parseArray(params, clazz);
+    }
+
+    /**
+     * 过滤掉空的key和value
+     * @param params
+     * @return
+     */
+    public static Map<String,String> filterBlank(Map<String,?> params){
+        return params.entrySet().parallelStream()
+                .filter(entry -> Objects.nonNull(entry.getKey()) && StringUtils.isNotBlank(entry.getKey()))
+                .filter(entry -> Objects.nonNull(entry.getValue()) && StringUtils.isNotBlank(entry.getValue().toString()))
+                .collect(Collectors.toMap(entry -> entry.getKey(),entry -> entry.getValue().toString()));
     }
 }

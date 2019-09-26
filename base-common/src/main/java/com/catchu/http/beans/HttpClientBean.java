@@ -3,15 +3,18 @@ package com.catchu.http.beans;
 import com.catchu.http.builders.HttpClientPoolManagerBuilder;
 import com.catchu.http.builders.HttpParamsBuilder;
 import com.catchu.http.enums.ContentTypeEnum;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * HttpClientBean
@@ -20,7 +23,7 @@ import java.util.Map;
  */
 public class HttpClientBean {
 
-    private static final String DEFAULT_ENCODING = "UTF-8";
+    public static final String DEFAULT_ENCODING = "UTF-8";
 
     /**
      * 请求url
@@ -50,7 +53,7 @@ public class HttpClientBean {
     public String doGet() throws Exception {
         CloseableHttpResponse response = null;
         String result;
-        CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG, HttpClientPoolManagerBuilder.buildHttpClientRetryHandler());
+        CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
         url = HttpParamsBuilder.getParamBuilder(url, params, encode);
         HttpGet httpGet = new HttpGet(url);
         httpGet.setConfig(DEFAULT_REQUEST_CONFIG);
@@ -58,6 +61,33 @@ public class HttpClientBean {
             response = httpClient.execute(httpGet);
             assetSuccess(response);
             result = EntityUtils.toString(response.getEntity(), encode);
+        } finally {
+            release(response);
+        }
+        return result;
+    }
+
+    /**
+     * 发Post请求
+     * @return
+     * @throws Exception
+     */
+    public String doPost() throws Exception{
+        String result="";
+        CloseableHttpResponse response=null;
+        try {
+            CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(DEFAULT_REQUEST_CONFIG);
+            httpPost.setHeader("Content-Type",contentType.getContentType());
+            httpPost.setEntity(contentType.buildRequestEntity(params,encode));
+            response = httpClient.execute(httpPost);
+            assetSuccess(response);
+            HttpEntity entity = response.getEntity();
+            if(Objects.nonNull(entity)){
+                result = EntityUtils.toString(entity, encode);
+                EntityUtils.consume(entity);
+            }
         } finally {
             release(response);
         }

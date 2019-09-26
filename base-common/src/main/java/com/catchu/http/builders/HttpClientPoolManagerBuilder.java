@@ -58,16 +58,15 @@ public class HttpClientPoolManagerBuilder {
     /**
      * 创建自定义的HttpClient对象
      * @param requestConfig 请求超时配置
-     * @param retryHandler 失败重试策略
      * @return
      */
-    public CloseableHttpClient buildHttpClient(RequestConfig requestConfig, HttpRequestRetryHandler retryHandler){
+    public CloseableHttpClient buildHttpClient(RequestConfig requestConfig){
         return HttpClients.custom()
                 // 把请求相关的超时信息配置在调用端
                 .setDefaultRequestConfig(requestConfig)
-                // 把重试策略配置在调用端
-                .setRetryHandler(retryHandler)
-                // p配置连接池管理对象
+                // 失败重试策略
+                .setRetryHandler(buildHttpClientRetryHandler())
+                // 配置连接池管理对象
                 .setConnectionManager(connManager)
                 .build();
     }
