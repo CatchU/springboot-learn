@@ -3,12 +3,14 @@ package com.catchu.http.beans;
 import com.catchu.http.builders.HttpClientPoolManagerBuilder;
 import com.catchu.http.builders.HttpParamsBuilder;
 import com.catchu.http.enums.ContentTypeEnum;
+import com.catchu.http.ext.HttpDeleteWithBody;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
@@ -53,11 +55,12 @@ public class HttpClientBean {
     public String doGet() throws Exception {
         CloseableHttpResponse response = null;
         String result;
-        CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
-        url = HttpParamsBuilder.getParamBuilder(url, params, encode);
-        HttpGet httpGet = new HttpGet(url);
-        httpGet.setConfig(DEFAULT_REQUEST_CONFIG);
         try {
+            CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
+            url = HttpParamsBuilder.getParamBuilder(url, params, encode);
+            HttpGet httpGet = new HttpGet(url);
+            httpGet.setConfig(DEFAULT_REQUEST_CONFIG);
+
             response = httpClient.execute(httpGet);
             assetSuccess(response);
             result = EntityUtils.toString(response.getEntity(), encode);
@@ -73,7 +76,7 @@ public class HttpClientBean {
      * @throws Exception
      */
     public String doPost() throws Exception{
-        String result="";
+        String result=null;
         CloseableHttpResponse response=null;
         try {
             CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
@@ -81,6 +84,7 @@ public class HttpClientBean {
             httpPost.setConfig(DEFAULT_REQUEST_CONFIG);
             httpPost.setHeader("Content-Type",contentType.getContentType());
             httpPost.setEntity(contentType.buildRequestEntity(params,encode));
+
             response = httpClient.execute(httpPost);
             assetSuccess(response);
             HttpEntity entity = response.getEntity();
@@ -94,6 +98,62 @@ public class HttpClientBean {
         return result;
     }
 
+    /**
+     * 发Put请求
+     * @return
+     * @throws Exception
+     */
+    public String doPut() throws Exception{
+        String result=null;
+        CloseableHttpResponse response = null;
+        try {
+            CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
+            HttpPut httpPut = new HttpPut(url);
+            httpPut.setConfig(DEFAULT_REQUEST_CONFIG);
+            httpPut.setHeader("Content-Type",contentType.getContentType());
+            httpPut.setEntity(contentType.buildRequestEntity(params,encode));
+
+            response = httpClient.execute(httpPut);
+            assetSuccess(response);
+            HttpEntity entity = response.getEntity();
+            if(Objects.nonNull(entity)){
+                result=EntityUtils.toString(entity,encode);
+                EntityUtils.consume(entity);
+            }
+        } finally {
+            release(response);
+        }
+        return result;
+    }
+
+    public String doDelete() throws Exception{
+        String result=null;
+        CloseableHttpResponse response=null;
+        try {
+            CloseableHttpClient httpClient = HttpClientPoolManagerBuilder.build().buildHttpClient(DEFAULT_REQUEST_CONFIG);
+            HttpDeleteWithBody httpDelete = new HttpDeleteWithBody();
+            httpDelete.setConfig(DEFAULT_REQUEST_CONFIG);
+            httpDelete.setHeader("Content-Type",contentType.getContentType());
+            httpDelete.setEntity(contentType.buildRequestEntity(params,encode));
+
+            response = httpClient.execute(httpDelete);
+            assetSuccess(response);
+            HttpEntity entity = response.getEntity();
+            if(Objects.nonNull(entity)){
+                result = EntityUtils.toString(entity, encode);
+                EntityUtils.consume(entity);
+            }
+        } finally {
+            release(response);
+        }
+        return result;
+    }
+
+    /**
+     * 判断响应结果
+     * @param response
+     * @throws Exception
+     */
     private static void assetSuccess(CloseableHttpResponse response) throws Exception {
         if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             return;
@@ -101,6 +161,9 @@ public class HttpClientBean {
         throw new Exception("error statusCode:" + response.getStatusLine().getStatusCode() + "");
     }
 
+    /**
+     * 默认的请求配置参数
+     */
     private static final RequestConfig DEFAULT_REQUEST_CONFIG = RequestConfig.custom()
             .setConnectTimeout(1500)
             .setConnectionRequestTimeout(1500)

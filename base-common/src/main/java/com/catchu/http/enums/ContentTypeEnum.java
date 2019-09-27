@@ -4,7 +4,6 @@ import com.catchu.http.builders.HttpParamsBuilder;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.entity.StringEntity;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 

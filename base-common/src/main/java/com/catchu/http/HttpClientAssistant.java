@@ -91,4 +91,32 @@ public class HttpClientAssistant {
 
         throw new Exception("invalid request body");
     }
+
+    /**
+     * Put请求
+     * @param url
+     * @param params
+     * @param encode
+     * @param contentType
+     * @return
+     * @throws Exception
+     */
+    public static String doPut(String url, Map<String,String> params,String encode,ContentTypeEnum contentType) throws Exception{
+        HttpClientBean clientBean = new HttpClientBean(url, params, encode,contentType);
+        return clientBean.doPut();
+    }
+
+    /**
+     * Delete请求
+     * @param url
+     * @param params
+     * @param encode
+     * @param contentType
+     * @return
+     * @throws Exception
+     */
+    public static String doDelete(String url, Map<String,String> params,String encode,ContentTypeEnum contentType) throws Exception{
+        HttpClientBean clientBean = new HttpClientBean(url, params, encode,contentType);
+        return clientBean.doDelete();
+    }
 }

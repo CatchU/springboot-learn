@@ -3,7 +3,6 @@ package com.catchu.http;
 import com.alibaba.fastjson.JSONObject;
 import com.catchu.http.builders.HttpParamsBuilder;
 import com.catchu.http.enums.ContentTypeEnum;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -25,15 +24,18 @@ public class Test {
         //System.out.println(doPost());
 
         //测试将接收到的数据转成List列表
-        String s = doPost2();
-        JSONObject jsonObject = JSONObject.parseObject(s);
-        String content = jsonObject.getString("content");
-        String list = JSONObject.parseObject(content).getString("list");
-        List<CourseUserTaskRecordVO> courseUserTaskRecordVOS = HttpParamsBuilder.arrayParamsBuilder(list, CourseUserTaskRecordVO.class);
-        System.out.println(JSONObject.toJSONString(courseUserTaskRecordVOS));
+//        String s = doPost2();
+//        JSONObject jsonObject = JSONObject.parseObject(s);
+//        String content = jsonObject.getString("content");
+//        String list = JSONObject.parseObject(content).getString("list");
+//        List<CourseUserTaskRecordVO> courseUserTaskRecordVOS = HttpParamsBuilder.arrayParamsBuilder(list, CourseUserTaskRecordVO.class);
+//        System.out.println(JSONObject.toJSONString(courseUserTaskRecordVOS));
 
         //测试post请求，json格式，request body是Collection类型
         //System.out.println(doPost3());
+
+        //测试put
+        System.out.println(doPut());
     }
 
     public static String doGet(){
@@ -84,6 +86,19 @@ public class Test {
             String url = "http://localhost:8081/users/server/user/listUser";
             Set<Long> userIds = Sets.newHashSet(227L,229L,229L,230L);
             return HttpClientAssistant.doPost(url, userIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String doPut(){
+        try {
+            String url = "http://localhost:9090/course/web/internal/goods/commission/47";
+            Map<String,Object> params = new HashMap<>();
+            params.put("lessonId",47);
+            params.put("courseName",11);
+            return HttpClientAssistant.doPut(url, HttpParamsBuilder.mapParamsBuilder(params),null,ContentTypeEnum.APPOLICATION_JSON);
         } catch (Exception e) {
             e.printStackTrace();
         }
